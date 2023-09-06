@@ -5,7 +5,8 @@ namespace Library
 {
     public class AppointmentService
     {
-        public static string CreateAppointment(string name, string id, string phoneNumber, DateTime date, string appoinmentPlace, string doctorName)
+
+        public static string CreateAppointment(string name, string id, string phoneNumber, DateTime date, string appoinmentPlace, string doctorName, int patientAge, string speciality, string appointmentId)
         {
             StringBuilder stringBuilder = new StringBuilder("Scheduling appointment...\n");
             Boolean isValid = true;
@@ -41,12 +42,35 @@ namespace Library
                 isValid = false;
             }
 
+            
+            int maxAge = 200;
+            if (patientAge<0 || patientAge>maxAge)
+            {
+                stringBuilder.Append("Unable to schedule appointment, 'patient's age' is invalid\n");
+                isValid = false;
+            }
+
+            if (string.IsNullOrEmpty(speciality))
+            {
+                stringBuilder.Append("Unable to schedule appointment, 'doctor's speciality' is required\n");
+                isValid = false;
+            }
+
+            if (string.IsNullOrEmpty(appointmentId))
+            {
+                stringBuilder.Append("Unable to schedule appointment, 'appointment's identifier' is required\n");
+                isValid = false;
+            }
+            
+
             if (isValid)
             {
                 stringBuilder.Append("Appoinment scheduled");
             }
 
             return stringBuilder.ToString();
+
+            
         }
 
     }
